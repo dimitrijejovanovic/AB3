@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AB3.Models;
 using ABPort.Models;
+using AB3.Models.DTO;
 
 namespace AB3.Controllers
 {
@@ -34,7 +35,7 @@ namespace AB3.Controllers
             }
 
             var project = await _context.Project
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
             {
                 return NotFound();
@@ -46,6 +47,8 @@ namespace AB3.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
+            var categories = _context.Category.ToList();
+            ViewBag.Categories = categories;
             return View();
         }
 
@@ -54,10 +57,16 @@ namespace AB3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Description,Year,CreationDate,IsActive,ViewCount,Price,UnitsInStock")] Project project)
+        public async Task<IActionResult> Create(CreateProjectDTO projectDTO)
         {
+            Project project = null;
             if (ModelState.IsValid)
             {
+                project = new Project()
+                {
+                    Name = projectDTO.Name,
+                    Description = projectDTO.Description
+                };
                 _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -73,7 +82,7 @@ namespace AB3.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Project.SingleOrDefaultAsync(m => m.ID == id);
+            var project = await _context.Project.SingleOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
             {
                 return NotFound();
@@ -88,7 +97,7 @@ namespace AB3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Description,Year,CreationDate,IsActive,ViewCount,Price,UnitsInStock")] Project project)
         {
-            if (id != project.ID)
+            if (id != project.ProjectId)
             {
                 return NotFound();
             }
@@ -102,7 +111,7 @@ namespace AB3.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectExists(project.ID))
+                    if (!ProjectExists(project.ProjectId))
                     {
                         return NotFound();
                     }
@@ -125,7 +134,7 @@ namespace AB3.Controllers
             }
 
             var project = await _context.Project
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(m => m.ProjectId == id);
             if (project == null)
             {
                 return NotFound();
@@ -139,7 +148,7 @@ namespace AB3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var project = await _context.Project.SingleOrDefaultAsync(m => m.ID == id);
+            var project = await _context.Project.SingleOrDefaultAsync(m => m.ProjectId == id);
             _context.Project.Remove(project);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -147,7 +156,7 @@ namespace AB3.Controllers
 
         private bool ProjectExists(int id)
         {
-            return _context.Project.Any(e => e.ID == id);
+            return _context.Project.Any(e => e.ProjectId == id);
         }
     }
 }

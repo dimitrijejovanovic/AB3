@@ -11,9 +11,10 @@ using System;
 namespace AB3.Migrations
 {
     [DbContext(typeof(AB3Context))]
-    partial class AB3ContextModelSnapshot : ModelSnapshot
+    [Migration("20171030151424_m3")]
+    partial class m3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -9,3 +9,14 @@ C:\Users\Dimitrije Jovanovic\Documents\Visual Studio 2017\Projects\AB3\AB3\obj\D
 C:\Users\Dimitrije Jovanovic\Documents\Visual Studio 2017\Projects\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.AssemblyInfo.cs
 C:\Users\Dimitrije Jovanovic\Documents\Visual Studio 2017\Projects\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.dll
 C:\Users\Dimitrije Jovanovic\Documents\Visual Studio 2017\Projects\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.pdb
+E:\AB3\AB3\bin\Debug\netcoreapp2.0\AB3.deps.json
+E:\AB3\AB3\bin\Debug\netcoreapp2.0\AB3.runtimeconfig.json
+E:\AB3\AB3\bin\Debug\netcoreapp2.0\AB3.runtimeconfig.dev.json
+E:\AB3\AB3\bin\Debug\netcoreapp2.0\AB3.dll
+E:\AB3\AB3\bin\Debug\netcoreapp2.0\AB3.pdb
+E:\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.csprojResolveAssemblyReference.cache
+E:\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.csproj.CoreCompileInputs.cache
+E:\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.AssemblyInfoInputs.cache
+E:\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.AssemblyInfo.cs
+E:\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.dll
+E:\AB3\AB3\obj\Debug\netcoreapp2.0\AB3.pdb

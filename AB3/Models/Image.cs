@@ -7,11 +7,11 @@ namespace ABPort.Models
 {
     public class Image
     {
-        public int Id { get; set; }
+        public int ImageId { get; set; }
         public string ImageName { get; set; }
         public bool IsCover { get; set; }
         public string Src { get; set; }
-        //public Project Project { get; set; }
+        public virtual Project Project { get; set; }
 
     }
 }

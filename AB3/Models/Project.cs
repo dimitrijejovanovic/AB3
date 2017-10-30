@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AB3.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,13 +8,13 @@ namespace ABPort.Models
 {
     public class Project
     {
-        public int ID { get; set; }
+        public int ProjectId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Year { get; set; }
         public DateTime? CreationDate { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
-        public IEnumerable<Image> Images { get; set; }
+        public virtual ICollection<ProjectCategory> ProjectCategories { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
         public bool IsActive { get; set; }
         public int ViewCount { get; set; }
         public Double Price { get; set; }
@@ -31,14 +32,14 @@ namespace ABPort.Models
         public Project(string name = "Untitled",
                        string desc = null,
                        string year = null,
-                       IEnumerable<Category> cats = null,
-                       IEnumerable<Image> imgs = null,
+                       ICollection<ProjectCategory> cats = null,
+                       ICollection<Image> imgs = null,
                        Double prc = 0.0,
                        int uis = 0)
         {
             Name = name;
             Description = desc;
-            Categories = cats;
+            ProjectCategories = cats;
             Images = imgs;
             Year = year;
             Price = prc;
