@@ -32,9 +32,9 @@
                 <div class="checkbox">
                     @foreach (var cat in categories)
                     {
-                        <label asp-for="Categories" class="control-label">@cat.CategoryName</label>
+                        <label class="control-label">@cat.CategoryName</label>
                         <br>
-                        <input type="checkbox" />
+                        <input type="checkbox" class="check" value="@cat.CategoryName" name="Categories" />
                         <br>
                     }
                 </div>

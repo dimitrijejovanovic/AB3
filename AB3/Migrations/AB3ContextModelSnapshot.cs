@@ -20,20 +20,7 @@ namespace AB3.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AB3.Models.ProjectCategory", b =>
-                {
-                    b.Property<int>("ProjectId");
-
-                    b.Property<int>("CategoryId");
-
-                    b.HasKey("ProjectId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ProjectCategory");
-                });
-
-            modelBuilder.Entity("ABPort.Models.Category", b =>
+            modelBuilder.Entity("AB3.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd();
@@ -45,7 +32,7 @@ namespace AB3.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("ABPort.Models.Image", b =>
+            modelBuilder.Entity("AB3.Models.Image", b =>
                 {
                     b.Property<int>("ImageId")
                         .ValueGeneratedOnAdd();
@@ -65,7 +52,7 @@ namespace AB3.Migrations
                     b.ToTable("Image");
                 });
 
-            modelBuilder.Entity("ABPort.Models.Project", b =>
+            modelBuilder.Entity("AB3.Models.Project", b =>
                 {
                     b.Property<int>("ProjectId")
                         .ValueGeneratedOnAdd();
@@ -93,22 +80,35 @@ namespace AB3.Migrations
 
             modelBuilder.Entity("AB3.Models.ProjectCategory", b =>
                 {
-                    b.HasOne("ABPort.Models.Category", "Category")
-                        .WithMany("ProjectCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.Property<int>("ProjectId");
 
-                    b.HasOne("ABPort.Models.Project", "Project")
-                        .WithMany("ProjectCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.Property<int>("CategoryId");
+
+                    b.HasKey("ProjectId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("ProjectCategory");
                 });
 
-            modelBuilder.Entity("ABPort.Models.Image", b =>
+            modelBuilder.Entity("AB3.Models.Image", b =>
                 {
-                    b.HasOne("ABPort.Models.Project", "Project")
+                    b.HasOne("AB3.Models.Project", "Project")
                         .WithMany("Images")
                         .HasForeignKey("ProjectId");
+                });
+
+            modelBuilder.Entity("AB3.Models.ProjectCategory", b =>
+                {
+                    b.HasOne("AB3.Models.Category", "Category")
+                        .WithMany("ProjectCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AB3.Models.Project", "Project")
+                        .WithMany("ProjectCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

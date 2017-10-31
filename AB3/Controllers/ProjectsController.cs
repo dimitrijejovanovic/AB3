@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AB3.Models;
-using ABPort.Models;
 using AB3.Models.DTO;
 
 namespace AB3.Controllers
@@ -59,19 +58,37 @@ namespace AB3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProjectDTO projectDTO)
         {
-            Project project = null;
+            Project project = new Project();
             if (ModelState.IsValid)
             {
-                project = new Project()
-                {
-                    Name = projectDTO.Name,
-                    Description = projectDTO.Description
-                };
+                project.Name = projectDTO.Name;
+                project.Description = projectDTO.Description;
+                project.Price = projectDTO.Price;
+                project.UnitsInStock = projectDTO.UnitsInStock;
+                project.Year = projectDTO.Year;
+
                 _context.Add(project);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
+
+                //categories part
+                if (projectDTO.Categories != null && projectDTO.Categories.Count > 0)
+                {
+                    project.ProjectCategories = new List<ProjectCategory>();
+                    foreach (var cat in projectDTO.Categories)
+                    {
+                        var category = _context.Category.First(c => c.CategoryName.Equals(cat));
+                        var lastProject = _context.Project.First(p => p.Name.Equals(projectDTO.Name));
+                        var projectCatogory = new ProjectCategory();
+                        projectCatogory.Project = lastProject;
+                        projectCatogory.Category = category;
+                        _context.Add(projectCatogory);
+                        _context.SaveChanges();
+                    }
+                }
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(project);
+            return RedirectToAction(nameof(Create));
         }
 
         // GET: Projects/Edit/5

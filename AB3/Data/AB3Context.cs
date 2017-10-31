@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ABPort.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace AB3.Models
 {
@@ -14,24 +9,25 @@ namespace AB3.Models
         {
         }
 
-        public DbSet<ABPort.Models.Project> Project { get; set; }
-        public DbSet<ABPort.Models.Image> Image { get; set; }
-        public DbSet<ABPort.Models.Category> Category { get; set; }
+        public DbSet<Project> Project { get; set; }
+        public DbSet<Image> Image { get; set; }
+        public DbSet<Category> Category { get; set; }
+       // public DbSet<ProjectCategory> ProjectCategory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProjectCategory>()
-                .HasKey(t => new { t.ProjectId, t.CategoryId });
+                .HasKey(c => new { c.ProjectId, c.CategoryId });
 
             modelBuilder.Entity<ProjectCategory>()
-                .HasOne(pt => pt.Project)
+                .HasOne(pc => pc.Project)
                 .WithMany(p => p.ProjectCategories)
-                .HasForeignKey(pt => pt.CategoryId);
+                .HasForeignKey(pc => pc.ProjectId);
 
             modelBuilder.Entity<ProjectCategory>()
-                .HasOne(pt => pt.Category)
-                .WithMany(t => t.ProjectCategories)
-                .HasForeignKey(pt => pt.CategoryId);
+                .HasOne(pc => pc.Category)
+                .WithMany(c => c.ProjectCategories)
+                .HasForeignKey(pc => pc.CategoryId);
         }
     }
 }

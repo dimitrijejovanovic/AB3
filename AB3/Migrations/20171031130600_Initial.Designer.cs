@@ -11,7 +11,7 @@ using System;
 namespace AB3.Migrations
 {
     [DbContext(typeof(AB3Context))]
-    [Migration("20171029132220_Initial")]
+    [Migration("20171031130600_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,45 +21,41 @@ namespace AB3.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ABPort.Models.Category", b =>
+            modelBuilder.Entity("AB3.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CategoryName");
 
-                    b.Property<int?>("ProjectID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectID");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("ABPort.Models.Image", b =>
+            modelBuilder.Entity("AB3.Models.Image", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ImageId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ImageName");
 
                     b.Property<bool>("IsCover");
 
-                    b.Property<int?>("ProjectID");
+                    b.Property<int?>("ProjectId");
 
                     b.Property<string>("Src");
 
-                    b.HasKey("Id");
+                    b.HasKey("ImageId");
 
-                    b.HasIndex("ProjectID");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Image");
                 });
 
-            modelBuilder.Entity("ABPort.Models.Project", b =>
+            modelBuilder.Entity("AB3.Models.Project", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ProjectId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("CreationDate");
@@ -78,23 +74,42 @@ namespace AB3.Migrations
 
                     b.Property<string>("Year");
 
-                    b.HasKey("ID");
+                    b.HasKey("ProjectId");
 
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("ABPort.Models.Category", b =>
+            modelBuilder.Entity("AB3.Models.ProjectCategory", b =>
                 {
-                    b.HasOne("ABPort.Models.Project")
-                        .WithMany("Categories")
-                        .HasForeignKey("ProjectID");
+                    b.Property<int>("ProjectId");
+
+                    b.Property<int>("CategoryId");
+
+                    b.HasKey("ProjectId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("ProjectCategory");
                 });
 
-            modelBuilder.Entity("ABPort.Models.Image", b =>
+            modelBuilder.Entity("AB3.Models.Image", b =>
                 {
-                    b.HasOne("ABPort.Models.Project")
+                    b.HasOne("AB3.Models.Project", "Project")
                         .WithMany("Images")
-                        .HasForeignKey("ProjectID");
+                        .HasForeignKey("ProjectId");
+                });
+
+            modelBuilder.Entity("AB3.Models.ProjectCategory", b =>
+                {
+                    b.HasOne("AB3.Models.Category", "Category")
+                        .WithMany("ProjectCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AB3.Models.Project", "Project")
+                        .WithMany("ProjectCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
